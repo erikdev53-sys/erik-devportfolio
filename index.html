@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web Design Services for Local Cafes</title>
+  <meta name="description" content="Professional web design for local cafes and coffee shops to help grow their business with welcoming, mobile-friendly websites." />
+  <meta name="theme-color" content="#fdfaf5" />
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { }
+    })();
+  </script>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%238a5f22'/><text x='50' y='70' font-size='56' font-family='Georgia,serif' fill='%23fdfaf5' text-anchor='middle'>W</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+:root {
+  --bg: #fdfaf5;
+  --bg-soft: #fcf8f0;
+  --surface: #ffffff;
+  --surface-2: #f7f3eb;
+  --border: rgba(138, 95, 34, 0.15);
+  --border-strong: rgba(138, 95, 34, 0.3);
+  --text: #2d241e;
+  --text-muted: #6b5d54;
+  --accent: #4a6741;
+  --accent-2: #3a5233;
+  --accent-3: #8a5f22;
+  --accent-contrast: #fdfaf5;
+  --shadow: 0 20px 40px -20px rgba(45, 36, 30, 0.1);
+  --radius: 12px;
+  --radius-sm: 6px;
+  --maxw: 1160px;
+  --font: "Inter", system-ui, sans-serif;
+  --display: "Instrument Serif", Georgia, serif;
+  --mono: "JetBrains Mono", monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #1c1815;
+  --bg-soft: #241f1b;
+  --surface: #2a2420;
+  --surface-2: #332c27;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --text: #fdfaf5;
+  --text-muted: #bcaea5;
+  --accent: #8da87d;
+  --accent-2: #a3be8e;
+  --accent-3: #c4a484;
+  --accent-contrast: #1c1815;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: var(--font); font-size: 16px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+.container { width: 100%; max-width: var(--maxw); margin-inline: auto; padding-inline: 24px; }
+
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-scrolled { border-bottom-color: var(--border); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.logo { display: inline-flex; align-items: center; gap: 11px; font-weight: 600; }
+.logo-mark {
+  display: grid; place-items: center; width: 32px; height: 32px;
+  border-radius: 7px; background: var(--accent); color: var(--accent-contrast);
+  font-family: var(--display); font-size: 1.3rem; line-height: 1;
+}
+.accent { color: var(--accent-3); }
+.nav { display: flex; align-items: center; gap: 30px; }
+.nav a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s; }
+.nav a:hover { color: var(--text); }
+.nav a[aria-current="location"] { color: var(--text); font-weight: 600; }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  display: grid; place-items: center; width: 38px; height: 38px;
+  border-radius: 8px; border: 1px solid var(--border); background: transparent;
+}
+.icon-sun { display: none; }
+[data-theme="light"] .icon-sun { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+.menu-btn { display: none; }
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 120px 24px;
+  min-height: calc(100vh - 68px);
+}
+.hero-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 6px 13px; border: 1px solid var(--border);
+  background: var(--surface); border-radius: 999px;
+  font-family: var(--mono); font-size: 0.7rem; color: var(--text-muted);
+  margin-bottom: 28px;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+h1 {
+  font-family: var(--display); font-size: clamp(3rem, 6.4vw, 5.2rem);
+  font-weight: 400; line-height: 1.01; margin-bottom: 26px;
+}
+.gradient-text { color: var(--accent); font-style: italic; }
+.lead {
+  color: var(--text-muted); font-size: 1.2rem; line-height: 1.7;
+  max-width: 60ch; margin: 0 auto 40px;
+}
+.hero-actions { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 13px 22px; border-radius: 9px; font-weight: 600;
+  transition: transform 0.2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--accent); color: var(--accent-contrast); box-shadow: var(--shadow); }
+.btn-ghost { border: 1px solid var(--border-strong); color: var(--text); background: var(--surface-2); }
+.btn-ghost:hover { background: var(--bg-soft); border-color: var(--accent); }
+
+.section { padding-block: 100px; }
+.section-head { max-width: 680px; margin-bottom: 52px; }
+.eyebrow { font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+h2 { font-family: var(--display); font-size: clamp(2.1rem, 3.8vw, 3.1rem); font-weight: 400; }
+.section-sub { color: var(--text-muted); margin-top: 14px; }
+
+.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.skill-group { padding-top: 16px; border-top: 1px solid var(--border-strong); }
+.skill-group h3 { font-size: 0.68rem; font-family: var(--mono); text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chips li { padding: 7px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); font-size: 0.82rem; transition: all 0.2s; }
+.chips li:hover { border-color: var(--accent); color: var(--accent); }
+
+.contact-card { text-align: center; padding: 80px 28px; border: 1px solid var(--border-strong); border-radius: 20px; background: var(--surface); box-shadow: var(--shadow); }
+.contact-card h2 { margin-bottom: 18px; }
+.contact-card > p { color: var(--text-muted); max-width: 48ch; margin: 0 auto 32px; }
+.contact-actions { display: flex; justify-content: center; gap: 12px; }
+.copy-status { margin-top: 18px; font-family: var(--mono); font-size: 0.72rem; color: var(--accent); opacity: 0; transition: opacity 0.2s; }
+.copy-status.show { opacity: 1; }
+
+.policy-section { background: var(--surface-2); border-radius: var(--radius); padding: 40px; margin-bottom: 40px; border: 1px solid var(--border); }
+.policy-section h3 { font-family: var(--display); font-size: 1.8rem; margin-bottom: 16px; }
+.policy-section p, .policy-section li { color: var(--text-muted); margin-bottom: 12px; font-size: 0.95rem; }
+.policy-section ul { padding-left: 20px; list-style: disc; }
+
+.site-footer { display: flex; justify-content: space-between; padding-block: 40px; border-top: 1px solid var(--border); font-size: 0.8rem; color: var(--text-muted); }
+.back-to-top { font-weight: 600; color: var(--text); }
+
+.reveal { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+@media (max-width: 900px) {
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .menu-btn { display: grid; }
+  .nav {
+    position: absolute; top: 68px; left: 0; right: 0; flex-direction: column;
+    background: var(--bg-soft); padding: 20px; border-bottom: 1px solid var(--border);
+    opacity: 0; visibility: hidden; transition: all 0.2s;
+  }
+  .nav.open { opacity: 1; visibility: visible; }
+}
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top">
+        <span class="logo-mark">W</span>
+        <span class="logo-text">web<span class="accent">.cafe</span></span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#services">Services</a>
+        <a href="#contact">Contact</a>
+        <a href="#policies">Policies</a>
+      </nav>
+      <div class="header-actions">
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ru">RU</button>
+          <button class="lang-btn" data-lang="hy">AM</button>
+        </div>
+        <button class="icon-btn" id="theme-toggle">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.42-1.42"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="icon-btn menu-btn" id="menu-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div class="hero-content reveal">
+        <p class="badge"><span class="dot"></span>Available for new local projects</p>
+        <h1>Websites that<br /><span class="gradient-text">bring more people</span><br />into your cafe.</h1>
+        <p class="lead">We help local coffee shop and cafe owners turn their online presence into a welcoming front door. From easy-to-read mobile menus to seamless bookings, we build the tools that turn first-time visitors into regulars.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#services">Our Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16"><path d="M5 12h14M13 6l6 6-6 6" /></svg></a>
+          <a class="btn btn-ghost" href="#contact">Let's talk about your shop</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section container" id="services">
+      <div class="section-head reveal">
+        <p class="eyebrow">01 — Services</p>
+        <h2>How we help your business grow</h2>
+      </div>
+      <div class="skills-grid reveal">
+        <div class="skill-group"><h3>Digital Presence</h3><ul class="chips"><li>Custom Websites</li><li>Mobile Menu Design</li><li>Landing Pages</li></ul></div>
+        <div class="skill-group"><h3>Customer Growth</h3><ul class="chips"><li>Local SEO</li><li>Google Maps Setup</li><li>Conversion Optimization</li></ul></div>
+        <div class="skill-group"><h3>Operations</h3><ul class="chips"><li>Online Booking</li><li>Digital Menus</li><li>Contact Forms</li></ul></div>
+        <div class="skill-group"><h3>The Quality</h3><ul class="chips"><li>Fast Loading</li><li>Easy to Use</li><li>Accessible</li></ul></div>
+      </div>
+    </section>
+
+    <section class="section container" id="contact">
+      <div class="contact-card reveal">
+        <p class="eyebrow">02 — Contact</p>
+        <h2>Ready to welcome more customers?</h2>
+        <p>We are currently taking on a few new cafe projects. Tell us about your shop, and we'll let you know how we can make your online presence match the quality of your coffee.</p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:erik.dev53@gmail.com">erik.dev53@gmail.com</a>
+          <button class="btn btn-ghost" id="copy-email" data-email="erik.dev53@gmail.com">Copy email</button>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="section container" id="policies">
+      <div class="section-head reveal">
+        <p class="eyebrow">03 — Legal</p>
+        <h2>Terms & Policies</h2>
+      </div>
+      <div class="reveal">
+        <div class="policy-section">
+          <h3>Terms of Service</h3>
+          <p>By engaging our services, you agree to the following:</p>
+          <ul>
+            <li><strong>Scope:</strong> Project scope is defined at the start. Changes to scope may result in adjusted pricing.</li>
+            <li><strong>Content:</strong> Clients are responsible for providing all text and images.</li>
+            <li><strong>Payments:</strong> Payment terms are agreed upon per project (typically a deposit and final payment).</li>
+            <li><strong>Ownership:</strong> Upon final payment, ownership of the website design and content transfers to the client.</li>
+          </ul>
+        </div>
+        <div class="policy-section">
+          <h3>Refund Policy</h3>
+          <p>We strive for complete satisfaction with every project:</p>
+          <ul>
+            <li><strong>Deposits:</strong> Deposits are non-refundable as they secure your spot in our project queue.</li>
+            <li><strong>Milestones:</strong> Refunds for completed milestones are not provided once the work has been approved.</li>
+            <li><strong>Cancellations:</strong> If a project is cancelled by the client, work completed up to that date will be billed.</li>
+            <li><strong>Support:</strong> Maintenance plans are billed monthly and can be cancelled with 30 days' notice.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <p>© <span id="year">2026</span> Web.Cafe. Built with care for local businesses.</p>
+    <a href="#top" class="back-to-top">Back to top ↑</a>
+  </footer>
+
+  <script>
+(function () {
+  "use strict";
+  const root = document.documentElement;
+  const themeToggle = document.getElementById("theme-toggle");
+  function applyTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    if (themeToggle) {
+      const isLight = theme === "light";
+      themeToggle.setAttribute("aria-pressed", String(isLight));
+    }
+  }
+  const stored = localStorage.getItem("theme");
+  applyTheme(stored || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      localStorage.setItem("theme", next);
+      applyTheme(next);
+    });
+  }
+  const menuBtn = document.getElementById("menu-btn");
+  const nav = document.getElementById("nav");
+  if (menuBtn && nav) {
+    menuBtn.addEventListener("click", () => nav.classList.toggle("open"));
+  }
+  const header = document.querySelector(".site-header");
+  if (header) {
+    window.addEventListener("scroll", () => header.classList.toggle("is-scrolled", window.scrollY > 8), { passive: true });
+  }
+  const reveals = document.querySelectorAll(".reveal");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add("in"); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+  const copyBtn = document.getElementById("copy-email");
+  const copyStatus = document.getElementById("copy-status");
+  if (copyBtn && copyStatus) {
+    copyBtn.addEventListener("click", async () => {
+      const email = copyBtn.dataset.email;
+      await navigator.clipboard.writeText(email);
+      copyStatus.textContent = "Copied ✓";
+      copyStatus.classList.add("show");
+      setTimeout(() => copyStatus.classList.remove("show"), 2000);
+    });
+  }
+  document.getElementById("year").textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

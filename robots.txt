@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+Disallow: /pay.html
+
+# Offline-copy tools and bulk scrapers (advisory).
+User-agent: HTTrack
+Disallow: /
+
+User-agent: WinHTTrack
+Disallow: /
+
+User-agent: WebHTTrack
+Disallow: /
+
+User-agent: WebCopier
+Disallow: /
+
+User-agent: Teleport
+Disallow: /
+
+User-agent: SiteSnagger
+Disallow: /
+
+User-agent: Offline Explorer
+Disallow: /
+
+User-agent: Wget
+Disallow: /
+
+User-agent: curl
+Disallow: /
+
+User-agent: python-requests
+Disallow: /
+
+User-agent: Go-http-client
+Disallow: /

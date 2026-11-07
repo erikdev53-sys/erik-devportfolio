@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="robots" content="noarchive" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; form-action 'self' mailto:; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; media-src 'none'; worker-src 'none'; upgrade-insecure-requests" />
+  <title>Erik — Web Designer for Local Cafes</title>
+  <meta name="description" content="Erik helps local cafes and coffee shops grow their business with welcoming, mobile-friendly websites that bring in more customers." />
+  <meta name="theme-color" content="#fdfaf5" />
+
+  <!-- Apply the saved theme before first paint to avoid a flash -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var theme = saved || (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) { /* localStorage unavailable — keep default */ }
+    })();
+  </script>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%238a5f22'/><text x='50' y='70' font-size='56' font-family='Georgia,serif' fill='%23fdfaf5' text-anchor='middle'>E</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+/* ============================================================
+   Portfolio — Cafe Edition
+   A warm, artisan direction: cream grounds, espresso type,
+   forest green accents, serif display.
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+:root {
+  --bg: #fdfaf5;
+  --bg-soft: #fcf8f0;
+  --surface: #ffffff;
+  --surface-2: #f7f3eb;
+  --border: rgba(138, 95, 34, 0.15);
+  --border-strong: rgba(138, 95, 34, 0.3);
+  --text: #2d241e;
+  --text-muted: #6b5d54;
+  --accent: #4a6741; /* Forest Green */
+  --accent-2: #3a5233;
+  --accent-3: #8a5f22; /* Espresso Brown */
+  --accent-contrast: #fdfaf5;
+  --glow: rgba(74, 103, 65, 0.05);
+  --shadow: 0 20px 40px -20px rgba(45, 36, 30, 0.1);
+  --radius: 12px;
+  --radius-sm: 6px;
+  --maxw: 1160px;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --bg: #1c1815;
+  --bg-soft: #241f1b;
+  --surface: #2a2420;
+  --surface-2: #332c27;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.15);
+  --text: #fdfaf5;
+  --text-muted: #bcaea5;
+  --accent: #8da87d;
+  --accent-2: #a3be8e;
+  --accent-3: #c4a484;
+  --accent-contrast: #1c1815;
+  --glow: rgba(0, 0, 0, 0.3);
+  --shadow: 0 26px 50px -34px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+h1, h2, h3 { margin: 0; letter-spacing: -0.02em; }
+p { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+::selection { background: var(--accent); color: var(--accent-contrast); }
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.skip-link {
+  position: absolute; top: -100px; left: 24px; z-index: 100;
+  padding: 10px 18px; border-radius: var(--radius-sm);
+  background: var(--accent); color: var(--accent-contrast);
+  font-weight: 600; font-size: 0.9rem; transition: top 0.2s ease;
+}
+.skip-link:focus { top: 12px; }
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+.site-header.is-scrolled {
+  border-bottom-color: var(--border);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+}
+.header-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 24px; height: 68px;
+}
+.logo {
+  display: inline-flex; align-items: center; gap: 11px;
+  font-weight: 600; letter-spacing: -0.02em; font-size: 1rem;
+}
+.logo-mark {
+  display: grid; place-items: center; width: 32px; height: 32px;
+  border-radius: 7px; background: var(--accent); color: var(--accent-contrast);
+  font-family: var(--display); font-size: 1.3rem; line-height: 1; padding-bottom: 2px;
+}
+.accent { color: var(--accent-3); }
+.nav { display: flex; align-items: center; gap: 30px; }
+.nav a {
+  position: relative; padding: 6px 0; font-size: 0.9rem;
+  font-weight: 500; color: var(--text-muted); transition: color 0.2s;
+}
+.nav a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 1px;
+  height: 1px; background: currentColor; transform: scaleX(0);
+  transform-origin: left; transition: transform 0.25s ease;
+}
+.nav a:hover, .nav a:focus-visible { color: var(--text); }
+.nav a:hover::after { transform: scaleX(1); }
+.nav a[aria-current="location"] { color: var(--text); }
+.nav a[aria-current="location"]::after { transform: scaleX(1); background: var(--accent); }
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn {
+  display: grid; place-items: center; width: 38px; height: 38px;
+  border-radius: 8px; border: 1px solid var(--border); background: transparent;
+  transition: border-color 0.2s, background 0.2s;
+}
+.icon-btn:hover { border-color: var(--border-strong); background: var(--surface); }
+.icon-btn svg { width: 17px; height: 17px; }
+.icon-sun { display: none; }
+[data-theme="light"] .icon-sun { display: block; }
+[data-theme="light"] .icon-moon { display: none; }
+.menu-btn { display: none; }
+
+/* ---------- Hero ---------- */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding-block: 140px 100px;
+  min-height: calc(100vh - 68px);
+}
+.hero-content {
+  max-width: 800px;
+}
+.badge {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 6px 13px 6px 11px; border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  border-radius: 999px; font-family: var(--mono); font-size: 0.7rem;
+  letter-spacing: 0.04em; color: var(--text-muted); margin-bottom: 28px;
+}
+.dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(74, 103, 65, 0.14); animation: pulse-dot 2.8s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(74, 103, 65, 0.1); }
+  50% { box-shadow: 0 0 0 7px rgba(74, 103, 65, 0.02); }
+}
+h1 {
+  font-family: var(--display); font-size: clamp(3rem, 6.4vw, 5.2rem);
+  font-weight: 400; line-height: 1.01; letter-spacing: -0.015em; margin-bottom: 26px;
+}
+.gradient-text { color: var(--accent); font-style: italic; }
+.lead {
+  color: var(--text-muted); font-size: 1.2rem; line-height: 1.7;
+  max-width: 60ch; margin-inline: auto; margin-bottom: 40px;
+}
+.hero-actions {
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: center; gap: 12px; margin-bottom: 40px;
+}
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  padding: 13px 22px; border-radius: 9px; border: 1px solid transparent;
+  font-size: 0.92rem; font-weight: 600; transition: transform 0.18s ease, background 0.18s ease;
+}
+.btn svg { width: 16px; height: 16px; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--accent); color: var(--accent-contrast); box-shadow: var(--shadow); }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-ghost { background: transparent; border-color: var(--border); color: var(--text); }
+.btn-ghost:hover { border-color: var(--border-strong); background: var(--surface); }
+
+/* ---------- Sections ---------- */
+.section { padding-block: 104px; }
+.section-head { max-width: 680px; margin-bottom: 52px; }
+.eyebrow {
+  font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+}
+h2 { font-family: var(--display); font-size: clamp(2.1rem, 3.8vw, 3.1rem); font-weight: 400; line-height: 1.06; }
+.section-sub { color: var(--text-muted); margin-top: 14px; max-width: 52ch; }
+
+/* ---------- About ---------- */
+.about-grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: start; }
+.about-text p { color: var(--text-muted); margin-bottom: 20px; max-width: 62ch; }
+.about-text strong { color: var(--text); font-weight: 600; }
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 7px; margin-top: 8px;
+  font-weight: 600; font-size: 0.9rem; color: var(--accent);
+}
+.link-arrow svg { width: 15px; height: 15px; transition: transform 0.2s ease; }
+.link-arrow:hover svg { transform: translateX(4px); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; margin: 0; border-top: 1px solid var(--border-strong); }
+.stat { padding: 22px 22px 24px 0; border-bottom: 1px solid var(--border); }
+.stat:nth-child(even) { padding-left: 22px; border-left: 1px solid var(--border); }
+.stat dt { font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.stat dd { margin: 0; font-family: var(--display); font-size: 2.5rem; font-weight: 400; line-height: 1; color: var(--text); }
+
+/* ---------- Projects ---------- */
+.projects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.project {
+  position: relative; display: flex; flex-direction: column;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); overflow: hidden; transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+.project:hover { transform: translateY(-4px); border-color: var(--border-strong); box-shadow: var(--shadow); }
+.project-thumb {
+  position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10;
+  overflow: hidden; background: var(--surface-2); border-bottom: 1px solid var(--border);
+}
+.thumb-index { position: absolute; top: 14px; left: 16px; z-index: 1; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; color: var(--accent-3); }
+.thumb-art { position: relative; z-index: 1; width: 58%; height: auto; color: var(--accent); opacity: 0.9; transition: transform 0.4s ease; }
+.project:hover .thumb-art { transform: scale(1.06); }
+.project-body { display: flex; flex-direction: column; flex: 1; gap: 12px; padding: 24px 22px 22px; }
+.project-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.project-top h3 { font-family: var(--display); font-size: 1.45rem; font-weight: 400; }
+.year { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--text-muted); }
+.project p { font-size: 1rem; line-height: 1.6; color: var(--text-muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tags li { font-family: var(--mono); font-size: 0.66rem; padding: 4px 9px; border-radius: 5px; border: 1px solid var(--border); color: var(--text-muted); }
+.project-links { display: flex; gap: 18px; margin-top: auto; padding-top: 10px; font-size: 0.82rem; font-weight: 600; }
+.project-links a { color: var(--accent); }
+.project-links a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- Skills ---------- */
+.skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.skill-group { padding-top: 16px; border-top: 1px solid var(--border-strong); }
+.skill-group h3 { font-size: 0.68rem; font-family: var(--mono); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.chips li { padding: 7px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); font-size: 0.82rem; font-weight: 500; transition: border-color 0.18s, color 0.18s; }
+.chips li:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Contact ---------- */
+.contact-card {
+  position: relative; overflow: hidden; text-align: center; padding: 76px 28px;
+  border: 1px solid var(--border-strong); border-radius: 20px;
+  background: var(--surface); box-shadow: var(--shadow);
+}
+.contact-card::before { content: ""; position: absolute; top: 0; left: 50%; width: 84px; height: 2px; transform: translateX(-50%); background: var(--accent); }
+.contact-card h2 { margin-bottom: 18px; }
+.contact-card > p:not(.eyebrow):not(.copy-status) { color: var(--text-muted); max-width: 48ch; margin-inline: auto; margin-bottom: 32px; }
+.contact-card .eyebrow { margin-bottom: 18px; }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.copy-status { min-height: 1.4em; margin-top: 18px; font-family: var(--mono); font-size: 0.72rem; color: var(--accent); opacity: 0; transition: opacity 0.25s; }
+.copy-status.show { opacity: 1; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+  gap: 12px; padding-block: 30px 40px; border-top: 1px solid var(--border); margin-top: 40px;
+  font-size: 0.8rem; color: var(--text-muted);
+}
+.back-to-top { font-weight: 600; color: var(--text); }
+.back-to-top:hover { color: var(--accent); }
+
+/* ---------- Reveal animation ---------- */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .hero { gap: 48px; } .nav { gap: 22px; } .about-grid { gap: 44px; } .skills-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 56px; padding-block: 80px 64px; min-height: 0; }
+  .hero-content { max-width: 640px; } .hero-visual { max-width: 520px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; } .stats { max-width: 520px; } .projects { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 720px) {
+  .menu-btn { display: grid; }
+  .nav {
+    position: absolute; top: 68px; left: 0; right: 0; flex-direction: column;
+    align-items: stretch; gap: 2px; padding: 12px 16px 18px; background: var(--bg-soft);
+    border-bottom: 1px solid var(--border); box-shadow: var(--shadow);
+    opacity: 0; visibility: hidden; transform: translateY(-6px); pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+  .nav.open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
+  .nav a { padding: 12px 14px; border-radius: var(--radius-sm); }
+  .nav a::after { left: 14px; right: 14px; bottom: 8px; }
+  .projects { grid-template-columns: 1fr; } .section { padding-block: 72px; } .section-head { margin-bottom: 40px; }
+}
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; } .contact-actions .btn { width: 100%; }
+  .contact-card { padding: 56px 22px; } .stat dd { font-size: 2.1rem; } .about-grid { gap: 32px; }
+}
+</style>
+</head>
+<body>
+  <a class="skip-link" href="#top">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="Home">
+        <span class="logo-mark">E</span>
+        <span class="logo-text">erik<span class="accent">.cafe</span></span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="#about">About</a>
+        <a href="#work">My Work</a>
+        <a href="#skills">Services</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Switch theme" aria-pressed="true">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.42-1.42" />
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+        </button>
+
+        <button class="icon-btn menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" tabindex="-1">
+    <!-- ================= HERO ================= -->
+    <section class="hero container">
+      <div class="hero-content reveal">
+        <p class="badge">
+          <span class="dot" aria-hidden="true"></span>
+          Available for new local projects
+        </p>
+
+        <h1>
+          I build websites that<br />
+          <span class="gradient-text">bring more people</span><br />
+          into your cafe.
+        </h1>
+
+        <p class="lead">
+          I help local coffee shop and cafe owners turn their online presence into a welcoming front door.
+          From easy-to-read mobile menus to seamless bookings, I build the tools that turn first-time visitors into regulars.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#work">
+            See my work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+          <a class="btn btn-ghost" href="#contact">Let's talk about your shop</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section container" id="about">
+      <div class="section-head reveal">
+        <p class="eyebrow">01 — About</p>
+        <h2>More than just a website, a digital storefront</h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            For most cafes, a website isn't about "tech"—it's about <strong>hospitality</strong>.
+            If your menu is hard to read on a phone or your address is hidden, you're losing customers before they even taste your coffee.
+          </p>
+          <p>
+            I specialize in building fast, beautiful, and simple websites for local businesses.
+            I focus on the details that actually matter: making sure your shop is easy to find,
+            your specials are clear, and your brand feels as warm online as it does in person.
+          </p>
+          <a class="link-arrow" href="#contact">
+            Want a better online presence?
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </a>
+        </div>
+
+        <dl class="stats reveal">
+          <div class="stat">
+            <dt>Happy Clients</dt>
+            <dd>12+</dd>
+          </div>
+          <div class="stat">
+            <dt>Local Shops Helped</dt>
+            <dd>20+</dd>
+          </div>
+          <div class="stat">
+            <dt>Page Load Speed</dt>
+            <dd>Fast</dd>
+          </div>
+          <div class="stat">
+            <dt>Coffee Drunk</dt>
+            <dd>∞</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ================= WORK ================= -->
+    <section class="section container" id="work">
+      <div class="section-head reveal">
+        <p class="eyebrow">02 — Selected work</p>
+        <h2>Real results for local shops</h2>
+        <p class="section-sub">Websites designed to increase foot traffic and simplify the customer experience.</p>
+      </div>
+
+      <div class="projects">
+        <article class="project reveal">
+          <div class="project-thumb">
+            <span class="thumb-index" aria-hidden="true">01</span>
+            <svg class="thumb-art" viewBox="0 0 200 140" width="200" height="140" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+              <path d="M60 40h80v60H60z" />
+              <path d="M80 40v-20h40v20" />
+              <path d="M70 80h60" />
+              <circle cx="100" cy="60" r="15" />
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-top">
+              <h3>The Artisan Roast</h3>
+              <span class="year">2025</span>
+            </div>
+            <p>
+              Rebuilt the online menu for a local roastery. Switched to a mobile-first
+              layout that reduced bounce rates by 40% and made their daily specials
+              instantly accessible.
+            </p>
+            <ul class="tags">
+              <li>Mobile-First</li><li>Local SEO</li><li>UI Design</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" aria-label="Live demo">View Site ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-thumb">
+            <span class="thumb-index" aria-hidden="true">02</span>
+            <svg class="thumb-art" viewBox="0 0 200 140" width="200" height="140" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="60" y="50" width="80" height="60" rx="5" />
+              <path d="M70 60h60M70 70h60M70 80h40" />
+              <circle cx="140" cy="40" r="10" />
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-top">
+              <h3>Ceramics & Coffee</h3>
+              <span class="year">2024</span>
+            </div>
+            <p>
+              Created a combined e-commerce and cafe site for a studio. Integrated
+              a simple booking system for pottery workshops, increasing
+              weekend appointments by 25%.
+            </p>
+            <ul class="tags">
+              <li>Booking System</li><li>Commerce</li><li>Astro</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" aria-label="Live demo">View Site ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project reveal">
+          <div class="project-thumb">
+            <span class="thumb-index" aria-hidden="true">03</span>
+            <svg class="thumb-art" viewBox="0 0 200 140" width="200" height="140" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true">
+              <path d="M50 100h100v-40H50z" />
+              <path d="M70 60v-20M100 60v-20M130 60v-20" />
+            </svg>
+          </div>
+          <div class="project-body">
+            <div class="project-top">
+              <h3>Urban Bean Hub</h3>
+              <span class="year">2024</span>
+            </div>
+            <p>
+              Focused on speed and accessibility. The new site loads in under a second
+              on slow connections, ensuring customers can find the address and
+              hours without frustration.
+            </p>
+            <ul class="tags">
+              <li>Performance</li><li>Accessibility</li><li>Vanilla JS</li>
+            </ul>
+            <div class="project-links">
+              <a href="#" aria-label="Live demo">View Site ↗</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ================= SKILLS ================= -->
+    <section class="section container" id="skills">
+      <div class="section-head reveal">
+        <p class="eyebrow">03 — Services</p>
+        <h2>How I help your business grow</h2>
+      </div>
+
+      <div class="skills-grid reveal">
+        <div class="skill-group">
+          <h3>Digital Presence</h3>
+          <ul class="chips">
+            <li>Custom Websites</li><li>Mobile Menu Design</li><li>Landing Pages</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Customer Growth</h3>
+          <ul class="chips">
+            <li>Local SEO</li><li>Google Maps Setup</li><li>Conversion Optimization</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>Operations</h3>
+          <ul class="chips">
+            <li>Online Booking</li><li>Digital Menus</li><li>Contact Forms</li>
+          </ul>
+        </div>
+        <div class="skill-group">
+          <h3>The Quality</h3>
+          <ul class="chips">
+            <li>Fast Loading</li><li>Easy to Use</li><li>Accessible</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section container" id="contact">
+      <div class="contact-card reveal">
+        <p class="eyebrow">04 — Contact</p>
+        <h2>Ready to welcome more customers?</h2>
+        <p>
+          I'm currently taking on a few new cafe projects. Tell me about your shop,
+          and I'll let you know how we can make your online presence match the
+          quality of your coffee.
+        </p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:erik.dev53@gmail.com">
+            erik.dev53@gmail.com
+          </a>
+          <button class="btn btn-ghost" id="copy-email" type="button" data-email="erik.dev53@gmail.com">
+            Copy email
+          </button>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <p>© <span id="year">2026</span> Erik. Built with care for local businesses.</p>
+    <a href="#top" class="back-to-top">Back to top ↑</a>
+  </footer>
+
+  <script>
+(function () {
+  "use strict";
+  const root = document.documentElement;
+  const themeToggle = document.getElementById("theme-toggle");
+  function applyTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    if (themeToggle) {
+      const isLight = theme === "light";
+      themeToggle.setAttribute("aria-pressed", String(isLight));
+      themeToggle.setAttribute("aria-label", isLight ? "Switch to dark theme" : "Switch to light theme");
+    }
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "light" ? "#fdfaf5" : "#1c1815");
+  }
+  const stored = localStorage.getItem("theme");
+  const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+  applyTheme(stored || (prefersLight ? "light" : "dark"));
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      const next = root.getAttribute("data-theme") === "light" ? "dark" : "light";
+      localStorage.setItem("theme", next);
+      applyTheme(next);
+    });
+  }
+  const menuBtn = document.getElementById("menu-btn");
+  const nav = document.getElementById("nav");
+  function closeMenu() {
+    if (!nav || !menuBtn) return;
+    nav.classList.remove("open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    menuBtn.setAttribute("aria-label", "Open menu");
+  }
+  if (menuBtn && nav) {
+    menuBtn.addEventListener("click", function () {
+      const isOpen = nav.classList.toggle("open");
+      menuBtn.setAttribute("aria-expanded", String(isOpen));
+      menuBtn.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+    });
+    nav.addEventListener("click", function (event) { if (event.target.closest("a")) closeMenu(); });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && nav.classList.contains("open")) { closeMenu(); menuBtn.focus(); }
+    });
+    document.addEventListener("click", function (event) {
+      if (!nav.classList.contains("open")) return;
+      if (event.target.closest(".site-header")) return;
+      closeMenu();
+    });
+  }
+  const header = document.querySelector(".site-header");
+  if (header) {
+    const updateHeader = function () { header.classList.toggle("is-scrolled", window.scrollY > 8); };
+    updateHeader();
+    window.addEventListener("scroll", updateHeader, { passive: true });
+  }
+  const navLinks = Array.prototype.slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+  const spySections = navLinks.map(link => document.querySelector(link.getAttribute("href"))).filter(s => s);
+  if (spySections.length && "IntersectionObserver" in window) {
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(link => link.removeAttribute("aria-current"));
+        const active = navLinks.find(link => link.getAttribute("href") === "#" + entry.target.id);
+        if (active) active.setAttribute("aria-current", "location");
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+    spySections.forEach(s => spy.observe(s));
+  }
+  const reveals = document.querySelectorAll(".reveal");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    reveals.forEach(el => el.classList.add("in"));
+  } else {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add("in"); observer.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+    reveals.forEach(el => observer.observe(el));
+  }
+  const copyBtn = document.getElementById("copy-email");
+  const copyStatus = document.getElementById("copy-status");
+  if (copyBtn && copyStatus) {
+    copyBtn.addEventListener("click", async function () {
+      const email = copyBtn.dataset.email || "erik.dev53@gmail.com";
+      const copied = await copyText(email);
+      if (copied) {
+        showStatus("Copied " + email + " to clipboard ✓");
+        const original = copyBtn.textContent;
+        copyBtn.textContent = "Copied ✓";
+        window.setTimeout(() => { copyBtn.textContent = original; }, 2000);
+      } else {
+        showStatus("Couldn't copy automatically — the address is " + email);
+      }
+    });
+    async function copyText(text) {
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(text); return true; } catch (err) {}
+      }
+      try {
+        const field = document.createElement("textarea");
+        field.value = text; field.setAttribute("readonly", "");
+        field.style.position = "fixed"; field.style.top = "-1000px"; field.style.opacity = "0";
+        document.body.appendChild(field); field.select();
+        const ok = document.execCommand("copy"); document.body.removeChild(field);
+        return ok;
+      } catch (err) { return false; }
+    }
+    function showStatus(message) {
+      copyStatus.textContent = message; copyStatus.classList.add("show");
+      window.clearTimeout(showStatus.timer);
+      showStatus.timer = window.setTimeout(() => { copyStatus.classList.remove("show"); }, 2600);
+    }
+  }
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

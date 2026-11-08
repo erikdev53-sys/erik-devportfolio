@@ -1,0 +1,40 @@
+# Force HTTPS in production (skips local development hosts).
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:[0-9]+)?$ [NC]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Do not expose directory listings.
+Options -Indexes
+
+# Best-effort block for known offline-copy tools and scrapers.
+# This can be bypassed by spoofing the User-Agent, so it is deterrence, not proof.
+<IfModule mod_setenvif.c>
+  SetEnvIfNoCase User-Agent "HTTrack|WinHTTrack|WebHTTrack|WebCopier|Teleport|SiteSnagger|Offline Explorer|Wget|curl|libwww-perl|python-requests|Go-http-client" copier_bot
+</IfModule>
+<IfModule mod_authz_core.c>
+  <RequireAll>
+    Require all granted
+    Require not env copier_bot
+  </RequireAll>
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Allow from all
+  Deny from env=copier_bot
+</IfModule>
+
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set Cross-Origin-Resource-Policy "same-origin"
+  Header always set X-Permitted-Cross-Domain-Policies "none"
+  Header always set X-Robots-Tag "noarchive"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self' mailto:; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; media-src 'none'; worker-src 'none'; upgrade-insecure-requests"
+</IfModule>
